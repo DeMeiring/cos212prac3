@@ -62,6 +62,13 @@ public class Main
 		newTree.insert(4);
 		newTree.insert(1);
 		newTree.insert(3);
+		System.out.println("===========================");
+		System.out.println(newTree.search(-1));
+
+		BST cloneTree = new BST();
+		cloneTree.root = newTree.clone();
+
+		//newTree.printPreorder();
 		System.out.println("end");
 
 
