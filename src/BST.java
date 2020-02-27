@@ -44,11 +44,11 @@ public class BST<T extends Comparable<? super T>> {
 	{
 		//Your code goes here
         BSTNode mRoot = new BSTNode(root.element,root.left,root.right);
-        BST mirror = new BST();
+
         if(root==null)
             return null;
         else{
-            mirror.root=recMirror(mRoot);
+            mRoot.left = recMirror(root.right);
         }
         return mRoot;
 	}
@@ -57,8 +57,9 @@ public class BST<T extends Comparable<? super T>> {
 	public BSTNode<T> clone() 
 	{
 		//Your code goes here
-		BST clone = recClone(root);
-		return clone.root;
+		BST cloneTree = new BST();
+         cloneTree.root=recClone(root);
+		return cloneTree.root;
 
 	}
 
@@ -66,17 +67,21 @@ public class BST<T extends Comparable<? super T>> {
 	{
 		//Your code goes here
 		recPrePrint(root);
+        System.out.println();
 	}
 
         public void printPostorder() 
 	{
 		//Your code goes here
 		recPostPrint(root);
+        System.out.println();
 	}
 
 	public void insert(T element) 
 	{
 		//Your code goes here
+        if(element == search(element))
+            return;
 		BSTNode newNode = new BSTNode(element);
 		if(root==null){
             root=recInsert(root,newNode);
@@ -199,22 +204,20 @@ public class BST<T extends Comparable<? super T>> {
 	}
 
 
-	public BST recClone(BSTNode node){
-		if(node==null){
-			return this;
-		}else{
-			insert((T)node.element);
-			recClone(node.left);
-			recClone(node.right);
-		}
-		return this;
+	public BSTNode recClone(BSTNode node){
+		if(node==null)return null;
+
+			BSTNode newNode = new BSTNode(root.element);
+			newNode.left=recClone(node.left);
+			newNode.right=recClone(node.right);
+		return node;
 	}
 
 	public void recPrePrint(BSTNode node){
 		if(node==null){
 			return;
 		}else{
-			System.out.println(node.element+" ");
+			System.out.print(node.element+" ");
 			recPrePrint(node.left);
 			recPrePrint(node.right);
 		}
@@ -226,7 +229,7 @@ public class BST<T extends Comparable<? super T>> {
 		}else{
 			recPostPrint(node.left);
 			recPostPrint(node.right);
-			System.out.println(node.element+"");
+			System.out.print(node.element+" ");
 		}
 	}
 
@@ -239,8 +242,8 @@ public class BST<T extends Comparable<? super T>> {
 
             node.left = right;
             node.right = left;
+            return node;
         }
-        return node;
     }
 
     public BSTNode recMerge(BSTNode node, T el){

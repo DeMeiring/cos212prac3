@@ -55,7 +55,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		//Practical 3
-		BST newTree = new BST();
+		/*BST newTree = new BST();
 		newTree.insert(2);
 		newTree.insert(-2);
 		newTree.insert(5);
@@ -70,11 +70,13 @@ public class Main
 		mirror.root= newTree.mirror();
 		System.out.println(newTree.deleteByCopy(2));
 		System.out.println(newTree.deleteByCopy(-2));
-		//newTree.printPreorder();
-		System.out.println("end");
+		newTree.printPostorder();
+		newTree.printPostorder();
+		newTree.printPreorder();
+		System.out.println("end");*/
 
 
-		/*BST<Integer> tree = new BST<Integer>();
+		BST<Integer> tree = new BST<Integer>();
 		
 		tree.insert(8);
 
@@ -118,7 +120,7 @@ public class Main
 
 		mirror.root = tree.mirror();
 
-		printTree(mirror, 0);*/
+		printTree(mirror, 0);
            
 		/* Expected Output:
 		8 5 12
