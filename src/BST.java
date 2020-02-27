@@ -43,8 +43,15 @@ public class BST<T extends Comparable<? super T>> {
 	public BSTNode<T> mirror() 
 	{
 		//Your code goes here
-		return null;
-		}
+        BSTNode mRoot = new BSTNode(root.element,root.left,root.right);
+        BST mirror = new BST();
+        if(root==null)
+            return null;
+        else{
+            mirror.root=recMirror(mRoot);
+        }
+        return mRoot;
+	}
 
 
 	public BSTNode<T> clone() 
@@ -71,19 +78,90 @@ public class BST<T extends Comparable<? super T>> {
 	{
 		//Your code goes here
 		BSTNode newNode = new BSTNode(element);
+		if(root==null){
+            root=recInsert(root,newNode);
+        }else
 		recInsert(root,newNode);
 	}
 
 	public boolean deleteByMerge(T element) 
 	{
 		//Your code goes here
-		return true;
-	}
+       BSTNode tmp,node,p=root,prev=null;
+       while (p!=null && p.element.compareTo(element)!=0){
+            prev=p;
+            if(p.element.compareTo(element)<0)
+                p=p.right;
+            else p=p.left;
+       }
+       node=p;
+       if(p!=null && p.element.compareTo(element)==0){
+           if(node.right==null)
+               node=node.left;
+           else if(node.left==null)
+               node=node.right;
+           else {
+               tmp = node.left;
+               while (tmp.right != null)
+                   tmp = tmp.right;
+               tmp.right = node.right;
+               node = node.left;
+           }
+           if(p==root)
+               root=node;
+           else if(prev.left==p)
+               prev.left=node;
+           else prev.right=node;
+           return true;
+           }
+        else if(root!=null)
+            return false;
+        else return false;
+       }
 
 	public boolean deleteByCopy(T element) 
 	{
 		//Your code goes here
-		return true;
+        BSTNode node,p=root,prev=null;
+        while(p!=null && p.element.compareTo(element)!=0){
+            prev=p;
+            if(p.element.compareTo(element)<0){
+                p=p.right;
+            }else
+                p=p.left;
+        }
+        node=p;
+        if(p!=null && p.element.compareTo(element)==0){
+            if(node.right==null)
+                node=node.left;
+            else if(node.left==null)
+                node=node.right;
+            else{
+                BSTNode temp=node.left;
+                BSTNode previous = node;
+                while(temp.right!=null){
+                    previous=temp;
+                    temp=temp.right;
+                }
+                node.element=temp.element;
+
+                if(previous==node)
+                    previous.left=temp.left;
+                else
+                    previous.right=temp.left;
+            }
+            if(p==root)
+                root=node;
+            else if(prev.left==p)
+                prev.left=node;
+            else
+                prev.right=node;
+            return true;
+        }
+        else if(root!=null)
+            return false;
+        else
+            return false;
 	}
 
 	public T search(T element) 
@@ -108,28 +186,16 @@ public class BST<T extends Comparable<? super T>> {
 
 	
 	//Helper functions
-	public BSTNode recInsert(BSTNode currParent,BSTNode newNode){
-		if(root==null){
-			root=newNode;
-			return newNode;
-		}else if(root.left==null && newNode.element.compareTo(root.element)<0){
-			root.left=newNode;
-		}else if(root.right==null && newNode.element.compareTo(root.element)>0){
-			root.right=newNode;
-		}else{
-			if(currParent.left!=null && newNode.element.compareTo(currParent.element)<0){
-				return recInsert(currParent.left,newNode);
-			}else if(currParent.right!=null && newNode.element.compareTo(currParent.element)>0){
-				return recInsert(currParent.right,newNode);
-			}else if(newNode.element.compareTo(currParent.element)==0){
-				return null;
-			}
-			if (newNode.element.compareTo(currParent.element)<0){
-				currParent.left=newNode;
-			}else
-				currParent.right=newNode;
-		}
-		return currParent;
+	public BSTNode recInsert(BSTNode node,BSTNode newNode){
+        if(node==null){
+            node=newNode;
+            return node;
+        }else if(newNode.element.compareTo(node.element)<0){
+            node.left = recInsert(node.left,newNode);
+        }else if(newNode.element.compareTo(node.element)>0){
+            node.right = recInsert(node.right,newNode);
+        }
+        return node;
 	}
 
 
@@ -163,5 +229,32 @@ public class BST<T extends Comparable<? super T>> {
 			System.out.println(node.element+"");
 		}
 	}
+
+	public BSTNode recMirror(BSTNode node){
+        if(node==null)
+            return node;
+        else {
+            BSTNode left = recMirror(node.left);
+            BSTNode right = recMirror(node.right);
+
+            node.left = right;
+            node.right = left;
+        }
+        return node;
+    }
+
+    public BSTNode recMerge(BSTNode node, T el){
+        if(node==null){
+            return node;
+        }else{
+            if(el.compareTo((T)node.element)<0){
+                node.left=recMerge(node.left,el);
+                return node;
+            }else{
+                node.right=recMerge(node.right,el);
+                return node;
+            }
+        }
+    }
 
 }

@@ -63,11 +63,13 @@ public class Main
 		newTree.insert(1);
 		newTree.insert(3);
 		System.out.println("===========================");
-		System.out.println(newTree.search(-1));
+		//System.out.println(newTree.search(-1));
+		System.out.println(newTree.deleteByMerge(2));
 
-		BST cloneTree = new BST();
-		cloneTree.root = newTree.clone();
-
+		BST mirror = new BST();
+		mirror.root= newTree.mirror();
+		System.out.println(newTree.deleteByCopy(2));
+		System.out.println(newTree.deleteByCopy(-2));
 		//newTree.printPreorder();
 		System.out.println("end");
 
