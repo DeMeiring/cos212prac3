@@ -75,6 +75,13 @@ public class Main
 		newTree.printPreorder();
 		System.out.println("end");*/
 
+		/*BST newTree = new BST();
+		newTree.insert(2);
+		newTree.insert(4);
+		newTree.insert(-1);
+
+		BST Tmirror = new BST();
+		Tmirror.root = newTree.mirror();*/
 
 		BST<Integer> tree = new BST<Integer>();
 		

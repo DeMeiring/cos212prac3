@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 @SuppressWarnings("unchecked")
 public class BST<T extends Comparable<? super T>> {
     
@@ -43,14 +46,13 @@ public class BST<T extends Comparable<? super T>> {
 	public BSTNode<T> mirror() 
 	{
 		//Your code goes here
-        BSTNode mRoot = new BSTNode(root.element,root.left,root.right);
-
         if(root==null)
             return null;
-        else{
-            mRoot.left = recMirror(root.right);
-        }
-        return mRoot;
+        BST mirror = new BST();
+        mirror.root=clone();
+        recMirror(mirror.root);
+        return mirror.root;
+
 	}
 
 
@@ -207,10 +209,10 @@ public class BST<T extends Comparable<? super T>> {
 	public BSTNode recClone(BSTNode node){
 		if(node==null)return null;
 
-			BSTNode newNode = new BSTNode(root.element);
+			BSTNode newNode = new BSTNode(node.element);
 			newNode.left=recClone(node.left);
 			newNode.right=recClone(node.right);
-		return node;
+		return newNode;
 	}
 
 	public void recPrePrint(BSTNode node){
@@ -234,16 +236,16 @@ public class BST<T extends Comparable<? super T>> {
 	}
 
 	public BSTNode recMirror(BSTNode node){
-        if(node==null)
-            return node;
-        else {
-            BSTNode left = recMirror(node.left);
-            BSTNode right = recMirror(node.right);
+	    if(node==null)
+	        return node;
 
-            node.left = right;
-            node.right = left;
-            return node;
-        }
+	    BSTNode left = recMirror(node.left);
+	    BSTNode right = recMirror(node.right);
+
+	    node.left = right;
+	    node.right=left;
+	    return node;
+
     }
 
     public BSTNode recMerge(BSTNode node, T el){
@@ -259,5 +261,6 @@ public class BST<T extends Comparable<? super T>> {
             }
         }
     }
+
 
 }
